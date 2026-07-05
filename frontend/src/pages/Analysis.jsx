@@ -6,7 +6,7 @@ import AnalysisHeader from "../components/analysis/AnalysisHeader";
 import LoadingAnimation from "../components/analysis/LoadingAnimation";
 import AnalysisProgress from "../components/analysis/AnalysisProgress";
 
-import { analyzeDress } from "../services/analysisService";
+import { analyzeGarment } from "../services/analysisService";
 
 import ImageComparison from "../components/analysis/ImageComparison";
 import AnalysisSummary from "../components/analysis/AnalysisSummary";
@@ -15,38 +15,34 @@ import AnalysisActions from "../components/analysis/AnalysisActions";
 
 export default function Analysis() {
   const {
-    frontImage,
-    backImage,
+  projectId,
 
-    loading,
-    setLoading,
+  loading,
+  setLoading,
 
-    analysisResult,
-    setAnalysisResult,
-  } = useContext(AppContext);
+  analysisResult,
+  setAnalysisResult,
+} = useContext(AppContext);
 
   useEffect(() => {
-    async function analyze() {
-      if (!frontImage || !backImage) return;
+  async function analyze() {
+    if (!projectId) return;
 
-      try {
-        setLoading(true);
+    try {
+      setLoading(true);
 
-        const result = await analyzeDress(
-          frontImage,
-          backImage
-        );
+      const result = await analyzeGarment(projectId);
 
-        setAnalysisResult(result);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
+      setAnalysisResult(result);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
+  }
 
-    analyze();
-  }, []);
+  analyze();
+}, [projectId]);
 
   return (
     <section className="min-h-screen bg-gray-50 px-6 py-14">

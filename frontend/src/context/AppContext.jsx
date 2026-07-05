@@ -18,6 +18,8 @@ export default function AppProvider({ children }) {
   const [patternData, setPatternData] = useState(null);
   const [fabricData, setFabricData] = useState(null);
 
+  const [loading, setLoading] = useState(false);
+
   const resetProject = () => {
     setProjectId(null);
     setFrontImage(null);

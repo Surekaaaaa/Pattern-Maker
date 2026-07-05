@@ -1,19 +1,21 @@
 const API_URL = "http://127.0.0.1:8000";
 
-export async function analyzeDress(frontImage, backImage) {
-  const formData = new FormData();
-
-  formData.append("front_image", frontImage);
-  formData.append("back_image", backImage);
-
-  const response = await fetch(`${API_URL}/analyze`, {
+export async function analyzeGarment(projectId) {
+  const response = await fetch(`${API_URL}/analysis/`, {
     method: "POST",
-    body: formData,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      projectId,
+    }),
   });
 
   if (!response.ok) {
-    throw new Error("Failed to analyze images.");
+    throw new Error("Analysis failed");
   }
 
-  return await response.json();
+  const result = await response.json();
+
+  return result.data;
 }
