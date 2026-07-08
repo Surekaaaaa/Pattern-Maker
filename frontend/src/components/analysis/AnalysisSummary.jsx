@@ -9,19 +9,19 @@ export default function AnalysisSummary() {
   const cards = [
     {
       title: "Garment",
-      value: analysisResult.garment_type,
+      value: analysisResult?.garmentType,
     },
     {
       title: "Fit",
-      value: analysisResult.fit,
+      value: analysisResult?.fit,
     },
     {
       title: "Sleeve",
-      value: analysisResult.sleeve_type,
+      value: analysisResult?.sleeve,
     },
     {
       title: "Neckline",
-      value: analysisResult.neckline,
+      value: analysisResult?.neckline,
     },
   ];
 

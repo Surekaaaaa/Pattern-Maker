@@ -1,5 +1,4 @@
 export default function ChatSuggestion({ onClick }) {
-
   const suggestions = [
     "Can I change fabric to silk?",
     "How much fabric do I need?",
@@ -8,18 +7,16 @@ export default function ChatSuggestion({ onClick }) {
   ];
 
   return (
-    <div className="flex flex-wrap gap-3 p-4">
-
-      {suggestions.map((s) => (
+    <div className="flex flex-wrap gap-3 border-t bg-gray-50 p-4">
+      {suggestions.map((suggestion) => (
         <button
-          key={s}
-          onClick={() => onClick(s)}
-          className="rounded-full border px-4 py-2 text-sm hover:bg-gray-100"
+          key={suggestion}
+          onClick={() => onClick?.(suggestion)}
+          className="rounded-full border border-gray-300 bg-white px-4 py-2 text-sm transition hover:border-blue-500 hover:bg-blue-50"
         >
-          {s}
+          {suggestion}
         </button>
       ))}
-
     </div>
   );
 }

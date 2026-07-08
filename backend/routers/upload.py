@@ -1,24 +1,42 @@
-from fastapi import APIRouter, File, UploadFile, HTTPException
+from fastapi import APIRouter, UploadFile, File
+from pathlib import Path
+import shutil
+import uuid
 
-from services.upload_service import save_uploaded_images
+router = APIRouter(
+    prefix="/upload",
+    tags=["Upload"]
+)
 
-router = APIRouter(prefix="/upload", tags=["Upload"])
+FRONT_FOLDER = Path("uploads/front")
+BACK_FOLDER = Path("uploads/back")
+
+FRONT_FOLDER.mkdir(parents=True, exist_ok=True)
+BACK_FOLDER.mkdir(parents=True, exist_ok=True)
 
 
 @router.post("/")
 async def upload_images(
     front: UploadFile = File(...),
-    back: UploadFile = File(...),
+    back: UploadFile = File(...)
 ):
-    if not front.content_type.startswith("image/"):
-        raise HTTPException(status_code=400, detail="Front file must be an image.")
+    project_id = str(uuid.uuid4())
 
-    if not back.content_type.startswith("image/"):
-        raise HTTPException(status_code=400, detail="Back file must be an image.")
+    front_name = f"{project_id}_front.jpg"
+    back_name = f"{project_id}_back.jpg"
 
-    result = save_uploaded_images(front, back)
+    front_path = FRONT_FOLDER / front_name
+    back_path = BACK_FOLDER / back_name
+
+    with open(front_path, "wb") as buffer:
+        shutil.copyfileobj(front.file, buffer)
+
+    with open(back_path, "wb") as buffer:
+        shutil.copyfileobj(back.file, buffer)
 
     return {
         "success": True,
-        "data": result,
+        "projectId": project_id,
+        "frontImage": str(front_path),
+        "backImage": str(back_path),
     }

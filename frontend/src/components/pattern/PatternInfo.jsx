@@ -1,35 +1,43 @@
 export default function PatternInfo({ pattern }) {
+  if (!pattern) return null;
+
   return (
     <div className="rounded-2xl bg-white p-6 shadow">
-
       <h2 className="mb-6 text-2xl font-bold">
         Pattern Information
       </h2>
 
       <div className="grid gap-5 md:grid-cols-2">
-
         <Info
-          title="Pattern ID"
-          value={pattern.pattern_id}
+          title="Pattern Name"
+          value={pattern.patternName}
         />
 
         <Info
-          title="Estimated Fabric"
-          value={`${pattern.fabric_consumption} m`}
+          title="Seam Allowance"
+          value={pattern.seamAllowance}
         />
 
         <Info
-          title="Available Formats"
-          value="PDF, SVG"
+          title="Estimated Time"
+          value={pattern.estimatedTime}
         />
 
         <Info
-          title="Status"
-          value="Ready"
+          title="Format"
+          value={pattern.format}
         />
 
+        <Info
+          title="Difficulty"
+          value={pattern.difficulty}
+        />
+
+        <Info
+          title="Project ID"
+          value={pattern.projectId}
+        />
       </div>
-
     </div>
   );
 }
@@ -37,7 +45,6 @@ export default function PatternInfo({ pattern }) {
 function Info({ title, value }) {
   return (
     <div className="rounded-xl border border-gray-200 p-4">
-
       <p className="text-sm text-gray-500">
         {title}
       </p>
@@ -45,7 +52,6 @@ function Info({ title, value }) {
       <h3 className="mt-2 text-lg font-semibold">
         {value}
       </h3>
-
     </div>
   );
 }

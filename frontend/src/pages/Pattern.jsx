@@ -17,7 +17,7 @@ export default function Pattern() {
   const [loading, setLoading] = useState(true);
 
   const {
-  analysisResult,
+  projectId,
   patternData,
   setPatternData,
 } = useContext(AppContext);
@@ -32,9 +32,7 @@ export default function Pattern() {
 
         setLoading(true);
 
-        const result = await generatePattern(
-          analysisResult
-        );
+        const result = await generatePattern(projectId);
 
         setPatternData(result);
 
@@ -52,11 +50,11 @@ export default function Pattern() {
 
     }
 
-    if (analysisResult) {
-      createPattern();
-    }
+    if (projectId) {
+  createPattern();
+}
 
-  }, [analysisResult]);
+  }, [projectId]);
 
   if (loading) {
     return (
@@ -102,21 +100,19 @@ export default function Pattern() {
 
 <div className="space-y-8">
 
-  <PatternPreview
-    image={patternData.preview_image}
-  />
+  <PatternPreview />
 
-  <PatternInfo
-    pattern={patternData}
-  />
+<PatternInfo
+  pattern={patternData}
+/>
 
-  <PatternPieces
-    pieces={patternData.pieces}
-  />
+<PatternPieces
+  pieces={patternData.patternPieces}
+/>
 
-  <PatternActions
-    pattern={patternData}
-  />
+<PatternActions
+  pattern={patternData}
+/>
 
 </div>
 
