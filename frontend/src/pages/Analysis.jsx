@@ -25,24 +25,30 @@ export default function Analysis() {
 } = useContext(AppContext);
 
   useEffect(() => {
-  async function analyze() {
-    if (!projectId) return;
+  if (!projectId) return;
 
+  const analyze = async () => {
     try {
       setLoading(true);
 
+      const response = await analyzeGarment(projectId);
+
+      console.log("Analysis Response:", response);
+
       const result = await analyzeGarment(projectId);
 
-      setAnalysisResult(result);
+console.log(result);
+
+setAnalysisResult(result);
     } catch (error) {
-      console.error(error);
+      console.error("Analysis failed:", error);
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   analyze();
-}, [projectId]);
+}, [projectId, setLoading, setAnalysisResult]);
 
   return (
     <section className="min-h-screen bg-gray-50 px-6 py-14">

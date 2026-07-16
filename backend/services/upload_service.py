@@ -3,30 +3,36 @@ from uuid import uuid4
 import shutil
 
 UPLOAD_DIR = Path("uploads")
-FRONT_DIR = UPLOAD_DIR / "front"
-BACK_DIR = UPLOAD_DIR / "back"
-
-FRONT_DIR.mkdir(parents=True, exist_ok=True)
-BACK_DIR.mkdir(parents=True, exist_ok=True)
+UPLOAD_DIR.mkdir(exist_ok=True)
 
 
 def save_uploaded_images(front_file, back_file):
+    # Generate unique project ID
     project_id = str(uuid4())
 
-    front_filename = f"{project_id}_front{Path(front_file.filename).suffix}"
-    back_filename = f"{project_id}_back{Path(back_file.filename).suffix}"
+    # Create project folder
+    project_folder = UPLOAD_DIR / project_id
+    project_folder.mkdir(parents=True, exist_ok=True)
 
-    front_path = FRONT_DIR / front_filename
-    back_path = BACK_DIR / back_filename
+    # Preserve original extensions
+    front_ext = Path(front_file.filename).suffix
+    back_ext = Path(back_file.filename).suffix
 
+    # Standardized filenames
+    front_path = project_folder / f"front{front_ext}"
+    back_path = project_folder / f"back{back_ext}"
+
+    # Save front image
     with front_path.open("wb") as buffer:
         shutil.copyfileobj(front_file.file, buffer)
 
+    # Save back image
     with back_path.open("wb") as buffer:
         shutil.copyfileobj(back_file.file, buffer)
 
     return {
         "projectId": project_id,
+        "projectFolder": str(project_folder),
         "frontImage": str(front_path),
         "backImage": str(back_path),
     }

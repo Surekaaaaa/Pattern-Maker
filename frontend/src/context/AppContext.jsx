@@ -63,8 +63,11 @@ export default function AppProvider({ children }) {
     fabricData,
     setFabricData,
 
+    loading,
+    setLoading,
+
     resetProject,
-  }), [
+}), [
     projectId,
     frontImage,
     backImage,
@@ -73,7 +76,8 @@ export default function AppProvider({ children }) {
     analysisResult,
     patternData,
     fabricData,
-  ]);
+    loading,
+]);
 
   return (
     <AppContext.Provider value={value}>

@@ -1,81 +1,90 @@
 import re
 
 
-def parse_analysis(text: str):
-    text = text.lower()
+def parse_analysis(result: dict):
 
-    result = {
+    caption = result.get("<MORE_DETAILED_CAPTION>", "").lower()
+
+    data = {
         "garmentType": "Unknown",
         "neckline": "Unknown",
-        "sleeveType": "Unknown",
-        "fit": "Regular",
+        "sleeve": "Unknown",
+        "fit": "Unknown",
         "length": "Unknown",
+        "closure": "Unknown",
+        "difficulty": "Intermediate",
+        "estimatedPieces": 6,
+        "description": result.get("<MORE_DETAILED_CAPTION>", "")
     }
 
-    # Garment
+    # ---------- Garment Type ----------
 
-    if "dress" in text:
-        result["garmentType"] = "Dress"
+    if "dress" in caption:
+        data["garmentType"] = "Dress"
 
-    elif "shirt" in text:
-        result["garmentType"] = "Shirt"
+    elif "shirt" in caption:
+        data["garmentType"] = "Shirt"
 
-    elif "top" in text:
-        result["garmentType"] = "Top"
+    elif "top" in caption:
+        data["garmentType"] = "Top"
 
-    # Neckline
+    elif "kurti" in caption:
+        data["garmentType"] = "Kurti"
 
-    necklines = [
-        "round",
-        "v-neck",
-        "square",
-        "boat",
-        "collar",
-        "sweetheart",
-    ]
+    # ---------- Neckline ----------
 
-    for item in necklines:
-        if item in text:
-            result["neckline"] = item.title()
+    if "round neckline" in caption or "round neck" in caption:
+        data["neckline"] = "Round Neck"
 
-    # Sleeves
+    elif "v-neck" in caption:
+        data["neckline"] = "V Neck"
 
-    sleeves = [
-        "sleeveless",
-        "short sleeve",
-        "long sleeve",
-        "puff sleeve",
-        "cap sleeve",
-    ]
+    elif "square neckline" in caption:
+        data["neckline"] = "Square Neck"
 
-    for item in sleeves:
-        if item in text:
-            result["sleeveType"] = item.title()
+    elif "collar" in caption:
+        data["neckline"] = "Collared"
 
-    # Fit
+    # ---------- Sleeve ----------
 
-    fits = [
-        "loose",
-        "regular",
-        "fitted",
-        "oversized",
-    ]
+    if "long sleeves" in caption:
+        data["sleeve"] = "Long Sleeve"
 
-    for item in fits:
-        if item in text:
-            result["fit"] = item.title()
+    elif "short sleeves" in caption:
+        data["sleeve"] = "Short Sleeve"
 
-    # Length
+    elif "sleeveless" in caption:
+        data["sleeve"] = "Sleeveless"
 
-    lengths = [
-        "mini",
-        "knee",
-        "midi",
-        "maxi",
-    ]
+    elif "half sleeves" in caption:
+        data["sleeve"] = "Half Sleeve"
 
-    for item in lengths:
-        if item in text:
-            result["length"] = item.title()
+    # ---------- Length ----------
 
-    return result
+    if "floor" in caption:
+        data["length"] = "Floor Length"
+
+    elif "ankle" in caption:
+        data["length"] = "Ankle Length"
+
+    elif "knee" in caption:
+        data["length"] = "Knee Length"
+
+    elif "mini" in caption:
+        data["length"] = "Mini"
+
+    # ---------- Fit ----------
+
+    if "loose" in caption:
+        data["fit"] = "Loose"
+
+    elif "regular" in caption:
+        data["fit"] = "Regular"
+
+    elif "fitted" in caption:
+        data["fit"] = "Fitted"
+
+    elif "oversized" in caption:
+        data["fit"] = "Oversized"
+
+    return data

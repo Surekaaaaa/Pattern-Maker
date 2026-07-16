@@ -29,7 +29,7 @@ export default function Upload() {
     try {
       const result = await uploadImages(frontImage, backImage);
 
-      setProjectId(result.data.projectId);
+      setProjectId(result.projectId);
 
       navigate("/analysis");
     } catch (error) {
