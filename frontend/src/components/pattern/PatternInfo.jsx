@@ -14,8 +14,28 @@ export default function PatternInfo({ pattern }) {
         />
 
         <Info
+          title="Garment Type"
+          value={pattern.garmentType}
+        />
+
+        <Info
+          title="Difficulty"
+          value={pattern.difficulty}
+        />
+
+        <Info
           title="Seam Allowance"
           value={pattern.seamAllowance}
+        />
+
+        <Info
+          title="Estimated Fabric"
+          value={pattern.estimatedFabric}
+        />
+
+        <Info
+          title="Fabric Width"
+          value={pattern.fabricWidth}
         />
 
         <Info
@@ -26,11 +46,6 @@ export default function PatternInfo({ pattern }) {
         <Info
           title="Format"
           value={pattern.format}
-        />
-
-        <Info
-          title="Difficulty"
-          value={pattern.difficulty}
         />
 
         <Info
@@ -50,7 +65,7 @@ function Info({ title, value }) {
       </p>
 
       <h3 className="mt-2 text-lg font-semibold">
-        {value}
+        {value || "N/A"}
       </h3>
     </div>
   );

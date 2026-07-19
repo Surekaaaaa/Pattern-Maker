@@ -25,36 +25,28 @@ export default function Pattern() {
   const [error, setError] = useState("");
 
   useEffect(() => {
+  if (!projectId) return;
 
-    async function createPattern() {
+  const createPattern = async () => {
+    try {
+      setLoading(true);
 
-      try {
+      const result = await generatePattern(projectId);
 
-        setLoading(true);
+      console.log("Pattern Response:", result);
 
-        const result = await generatePattern(projectId);
+      setPatternData(result);
+    } catch (err) {
+      console.error("Pattern generation failed:", err);
 
-        setPatternData(result);
-
-      } catch (err) {
-
-        console.error(err);
-
-        setError("Unable to generate pattern.");
-
-      } finally {
-
-        setLoading(false);
-
-      }
-
+      setError("Unable to generate pattern.");
+    } finally {
+      setLoading(false);
     }
+  };
 
-    if (projectId) {
   createPattern();
-}
-
-  }, [projectId]);
+}, [projectId, setPatternData]);
 
   if (loading) {
     return (
@@ -91,7 +83,9 @@ export default function Pattern() {
     );
 
   }
-
+if (!patternData) {
+  return null;
+}
   return (
 
     <section className="min-h-screen bg-gray-50 px-6 py-16">
