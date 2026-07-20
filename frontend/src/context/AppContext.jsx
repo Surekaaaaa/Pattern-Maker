@@ -19,6 +19,7 @@ export default function AppProvider({ children }) {
   const [fabricData, setFabricData] = useState(null);
 
   const [loading, setLoading] = useState(false);
+const [measurementData, setMeasurementData] = useState(null);
 
   const resetProject = () => {
     setProjectId(null);
@@ -29,6 +30,7 @@ export default function AppProvider({ children }) {
     setAnalysisResult(null);
     setPatternData(null);
     setFabricData(null);
+    setMeasurementData(null);
     localStorage.removeItem("projectId");
   };
 
@@ -66,6 +68,9 @@ export default function AppProvider({ children }) {
     loading,
     setLoading,
 
+    measurementData,
+setMeasurementData,
+
     resetProject,
 }), [
     projectId,
@@ -76,6 +81,7 @@ export default function AppProvider({ children }) {
     analysisResult,
     patternData,
     fabricData,
+    measurementData,
     loading,
 ]);
 

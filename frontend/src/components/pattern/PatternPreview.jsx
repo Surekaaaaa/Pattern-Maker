@@ -1,21 +1,39 @@
-export default function PatternPreview() {
+export default function PatternPreview({ pattern }) {
+
+  if (!pattern) return null;
+
   return (
     <div className="rounded-2xl bg-white p-6 shadow">
+
       <h2 className="mb-5 text-2xl font-bold">
         Pattern Preview
       </h2>
 
-      <div className="flex h-80 items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-gray-50">
-        <div className="text-center">
-          <p className="text-lg font-semibold text-gray-600">
-            Pattern Preview
-          </p>
+      <div className="overflow-hidden rounded-xl border bg-gray-50">
 
-          <p className="mt-2 text-sm text-gray-500">
-            This preview will be generated after the AI creates the sewing pattern.
-          </p>
-        </div>
+        {pattern.svg ? (
+
+          <img
+            src={`http://127.0.0.1:8000/${pattern.svg.replace(/\\/g, "/")}`}
+            alt="Generated Pattern"
+            className="mx-auto max-h-[700px] w-auto"
+          />
+
+        ) : (
+
+          <div className="flex h-80 items-center justify-center">
+
+            <p className="text-gray-500">
+              Pattern preview unavailable.
+            </p>
+
+          </div>
+
+        )}
+
       </div>
+
     </div>
   );
+
 }

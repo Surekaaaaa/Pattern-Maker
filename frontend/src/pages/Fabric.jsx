@@ -24,25 +24,28 @@ export default function Fabric() {
   } = useContext(AppContext);
 
   useEffect(() => {
-    async function loadFabric() {
-      try {
-        setLoading(true);
+  if (!projectId) return;
 
-        const result = await getFabricRecommendation(projectId);
+  const loadFabric = async () => {
+    try {
+      setLoading(true);
 
-        setFabricData(result);
-      } catch (err) {
-        console.error(err);
-        setError("Unable to load fabric recommendations.");
-      } finally {
-        setLoading(false);
-      }
+      const result = await getFabricRecommendation(projectId);
+
+      console.log("Fabric Response:", result);
+
+      setFabricData(result);
+    } catch (err) {
+      console.error("Fabric recommendation failed:", err);
+
+      setError("Unable to load fabric recommendations.");
+    } finally {
+      setLoading(false);
     }
+  };
 
-    if (projectId) {
-      loadFabric();
-    }
-  }, [projectId]);
+  loadFabric();
+}, [projectId, setFabricData]);
 
   if (loading) {
     return (
@@ -67,6 +70,10 @@ export default function Fabric() {
     );
   }
 
+  if (!fabricData) {
+  return null;
+}
+
   return (
     <section className="min-h-screen bg-gray-50 px-6 py-16">
       <FabricHeader />
@@ -74,8 +81,9 @@ export default function Fabric() {
       <div className="space-y-8">
         <FabricRecommendation fabric={fabricData} />
 
-        <FabricAlternatives />
-
+        <FabricAlternatives
+  fabrics={fabricData.recommendedFabrics}
+/>
         <FabricConsumption consumption={fabricData} />
 
         <FabricReason fabric={fabricData} />

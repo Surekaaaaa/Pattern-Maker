@@ -4,17 +4,17 @@ export default function FabricRecommendation({ fabric }) {
   return (
     <div className="rounded-2xl bg-white p-8 shadow">
       <h2 className="mb-6 text-2xl font-bold">
-        Recommended Fabric
+        Recommended Fabrics
       </h2>
 
       <div className="space-y-5 rounded-xl border border-green-200 bg-green-50 p-6">
         <div>
           <h3 className="text-3xl font-bold text-green-700">
-            {fabric.recommendedFabric}
+            {fabric.recommendedFabrics.join(", ")}
           </h3>
 
           <p className="mt-2 text-gray-600">
-            Recommended for the best fit, comfort, and garment appearance.
+            Recommended based on the detected garment type and construction.
           </p>
         </div>
 
@@ -40,30 +40,30 @@ export default function FabricRecommendation({ fabric }) {
           />
 
           <Info
-            title="Recommended Color"
-            value={fabric.recommendedColor}
+            title="Interfacing"
+            value={fabric.interfacing}
           />
 
           <Info
-            title="Care Instructions"
-            value={fabric.careInstructions}
+            title="Lining Required"
+            value={fabric.liningRequired ? "Yes" : "No"}
           />
         </div>
+
+        <div className="rounded-xl bg-white p-4 shadow-sm">
+          <p className="text-sm text-gray-500">
+            Care Instructions
+          </p>
+
+          <ul className="mt-2 list-disc pl-5 space-y-1">
+            {fabric.careInstructions.map((item) => (
+              <li key={item}>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-    </div>
-  );
-}
-
-function Info({ title, value }) {
-  return (
-    <div className="rounded-xl bg-white p-4 shadow-sm">
-      <p className="text-sm text-gray-500">
-        {title}
-      </p>
-
-      <h4 className="mt-2 font-semibold">
-        {value}
-      </h4>
     </div>
   );
 }

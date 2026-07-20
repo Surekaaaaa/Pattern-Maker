@@ -14,7 +14,7 @@ export default function AnalysisActions() {
       </button>
 
       <button
-        onClick={() => navigate("/pattern")}
+        onClick={() => navigate("/measurements")}
         className="rounded-xl bg-blue-600 px-8 py-4 font-semibold text-white transition hover:bg-blue-700"
       >
         Generate Pattern →

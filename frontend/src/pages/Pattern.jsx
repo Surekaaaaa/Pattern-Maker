@@ -94,8 +94,9 @@ if (!patternData) {
 
 <div className="space-y-8">
 
-  <PatternPreview />
-
+  <PatternPreview
+  pattern={patternData}
+/>
 <PatternInfo
   pattern={patternData}
 />

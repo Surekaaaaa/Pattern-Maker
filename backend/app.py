@@ -7,7 +7,16 @@ from routers.pattern import router as pattern_router
 from routers.fabric import router as fabric_router
 from routers.chatbot import router as chatbot_router
 
+from fastapi.staticfiles import StaticFiles
+from routers.measurements import router as measurements_router
+
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
+
 app = FastAPI(title="PatternAI API")
+
+uploads = Path("uploads")
+uploads.mkdir(exist_ok=True)
 
 app.add_middleware(
     CORSMiddleware,
@@ -17,11 +26,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.mount(
+    "/uploads",
+    StaticFiles(directory="uploads"),
+    name="uploads"
+)
+
 app.include_router(upload_router)
 app.include_router(analysis_router)
 app.include_router(pattern_router)
 app.include_router(fabric_router)
 app.include_router(chatbot_router)
+app.include_router(measurements_router)
 
 @app.get("/")
 def root():

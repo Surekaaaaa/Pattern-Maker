@@ -1,12 +1,5 @@
-export default function FabricAlternatives() {
-  const alternatives = [
-    "Cotton Lawn",
-    "Linen Blend",
-    "Rayon",
-    "Viscose",
-    "Chambray",
-    "Lightweight Denim",
-  ];
+export default function FabricAlternatives({ fabrics = [] }) {
+  if (!fabrics.length) return null;
 
   return (
     <div className="rounded-2xl bg-white p-8 shadow">
@@ -15,7 +8,7 @@ export default function FabricAlternatives() {
       </h2>
 
       <div className="grid gap-4 md:grid-cols-2">
-        {alternatives.map((item) => (
+        {fabrics.map((item) => (
           <div
             key={item}
             className="rounded-xl border border-gray-200 p-5 transition hover:border-blue-400 hover:shadow-md"
