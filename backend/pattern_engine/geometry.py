@@ -65,9 +65,24 @@ def rotate(point: Point, angle):
     )
 
 
-def curve_to_svg(curve: Curve):
+def curve_to_svg(
+    curve: Curve,
+    scale=1,
+    offset_x=0,
+    offset_y=0,
+):
+
+    x1 = curve.start.x * scale + offset_x
+    y1 = curve.start.y * scale + offset_y
+
+    cx = curve.control.x * scale + offset_x
+    cy = curve.control.y * scale + offset_y
+
+    x2 = curve.end.x * scale + offset_x
+    y2 = curve.end.y * scale + offset_y
+
     return (
-        f"M {curve.start.x},{curve.start.y} "
-        f"Q {curve.control.x},{curve.control.y} "
-        f"{curve.end.x},{curve.end.y}"
+        f"M {x1},{y1} "
+        f"Q {cx},{cy} "
+        f"{x2},{y2}"
     )

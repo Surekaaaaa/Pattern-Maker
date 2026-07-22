@@ -2,6 +2,12 @@ export default function PatternPreview({ pattern }) {
 
   if (!pattern) return null;
 
+  let imageUrl = "";
+
+  if (pattern.svg) {
+    imageUrl = `http://127.0.0.1:8000/${pattern.svg.replace(/\\/g, "/")}`;
+  }
+
   return (
     <div className="rounded-2xl bg-white p-6 shadow">
 
@@ -9,14 +15,14 @@ export default function PatternPreview({ pattern }) {
         Pattern Preview
       </h2>
 
-      <div className="overflow-hidden rounded-xl border bg-gray-50">
+      <div className="overflow-auto rounded-xl border bg-gray-50 p-6">
 
-        {pattern.svg ? (
+        {imageUrl ? (
 
           <img
-            src={`http://127.0.0.1:8000/${pattern.svg.replace(/\\/g, "/")}`}
+            src={imageUrl}
             alt="Generated Pattern"
-            className="mx-auto max-h-[700px] w-auto"
+            className="mx-auto max-w-full"
           />
 
         ) : (
@@ -35,5 +41,4 @@ export default function PatternPreview({ pattern }) {
 
     </div>
   );
-
 }
